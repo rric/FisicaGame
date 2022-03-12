@@ -1,4 +1,4 @@
-# FG01_Creation.pyde
+# F01_Creation.pyde
 # Copyright 2018-2022 Roland Richter
 
 add_library('fisica')
@@ -49,7 +49,7 @@ def setup():
     #   Note the subtle difference: `Plank` (with uppercase P) is the name 
     #   of the class, `plank` (with lowercase p) is one object of class Plank.
     #   By convention, class names start with uppercase letters, whereas 
-    #   object names start with lowercase letters.  
+    #   object names start with lowercase letters.
     
     plank = Plank(350, 15)
     
@@ -91,7 +91,7 @@ def setup():
     rightPingPong.setName("Ping pong ball #2")
     world.add(rightPingPong)
     
-    # HOMEWORK-1-b The world as populated above  -- with eight nails, a plank, and some
+    # HOMEWORK-1-b The world as populated above -- with eight nails, a plank, and
     #   soccer and ping pong balls -- is not very creative; it's not really a "game".
     #   Think of some other world, and populate it with a number of objects.    
 
