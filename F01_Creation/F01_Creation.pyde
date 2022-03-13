@@ -19,7 +19,6 @@ from SoccerBall import *
 
 def setup():
     size(800, 550)
-    colorMode(RGB, 100)
 
     Fisica.init(this)
     Fisica.setScale(150)  # scale: 150 pixel = 1 m
@@ -61,13 +60,13 @@ def setup():
     plank.setName("Wooden plank")
     world.add(plank)
 
-    redBall = SoccerBall(50, color(100, 11, 0))     # create a "Ferrari red" ball ...
+    redBall = SoccerBall(50, color(255, 40, 0))     # create a "Ferrari red" (#FF2800) ball ...
     redBall.setPosition(120, 40)                    # ... somewhere at top left ...
     redBall.setVelocity(random(-80, 80), 0)         # ... with random velocity.
     redBall.setName("Red soccer ball")
     world.add(redBall)
     
-    greenBall = SoccerBall(50, color(22, 88, 8))    # create a "Neon green" ball ...
+    greenBall = SoccerBall(50, color(57, 255, 20))  # create a "Neon green" (#39FF14) ball ...
     greenBall.setPosition(width/2, 40)              # ... somewhere at top centered ...
     greenBall.setVelocity(random(-80, 80), 0)       # ... with random velocity.
     greenBall.setName("Green soccer ball")
@@ -93,27 +92,28 @@ def setup():
     
     # HOMEWORK-1-b The world as populated above -- with eight nails, a plank, and
     #   soccer and ping pong balls -- is not very creative; it's not really a "game".
-    #   Think of some other world, and populate it with a number of objects.    
+    #   Think of some other world, and populate it with a number of objects.
 
 
-bgcolor = color(94, 87, 80)
+bgcolor = color(239, 222, 205) # start with a decent background color, "Almond" (#EFDECD)
 
 paused = False
 debug = False
 
 
+# draws background, and displays name and version of this game
 def drawBackground():
     # have black background in debug mode
     background(color(0, 0, 0) if debug else bgcolor)
     
     # determine font color; see https://stackoverflow.com/a/1855903
-    luminance = (0.299 * red(bgcolor) + 0.587 * green(bgcolor) + 0.114 * blue(bgcolor))/100.0
+    luminance = (0.299 * red(bgcolor) + 0.587 * green(bgcolor) + 0.114 * blue(bgcolor))/255.0
     
     # bright background - black font; dark background - white font
     if luminance > 0.5:   
-       fill(color(0,0,0))
+       fill(color(0, 0, 0))
     else:                 
-       fill(color(100, 100, 100))
+       fill(color(255, 255, 255))
     
     textSize(12)
     textAlign(RIGHT)
@@ -145,12 +145,12 @@ def keyPressed():
     # b/B - change background color
     if key == 'b' or key == 'B':
         global bgcolor
-        bgcolor = color(random(100), random(100), random(100))
+        bgcolor = color(random(255), random(255), random(255))
 
     # n/N - create a new object
     if key == 'n' or key == 'N':
         # HOMEWORK-1-a Write a new class TennisBall, and create a tennis ball
-        #   instead of a pink soccer ball here.
+        #   instead of a brick here.
         # Hint: start by copying SoccerBall. Wait a minute ...
         #   Are you allowed to copy SoccerBall, or even modify it?! 
         #   Read on at TOUR-10

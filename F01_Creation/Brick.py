@@ -4,8 +4,8 @@
 from fisica import FBox
 
 class Brick(FBox):
-    # Brick red, see http://latexcolor.com/
-    def __init__(self, w = 45, h = 20, clr = color(80, 25, 33)):
+    # Brick red #CB4154, see http://latexcolor.com/
+    def __init__(self, w = 45, h = 20, clr = color(203, 65, 84)):
         
         FBox.__init__(self, w, h)
         
@@ -14,7 +14,7 @@ class Brick(FBox):
         self.setDamping(0.2)
         self.setDensity(200000.0)
         self.setRestitution(0.0)
-    
+
 # ----------------------------------------------------------------------
 # This file is part of FisicaGame.
 #

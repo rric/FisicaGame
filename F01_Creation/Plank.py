@@ -33,10 +33,10 @@ class Plank(FBox):
     #   The constructor takes three arguments to initialize this object:
     #   `w` is the width, `h` is the height of the plank; `clr` is the color
     #   of the plank. All these arguments have default values: by default,
-    #   a Plank is 350 pixels wide, 15 pixels high, and of color 'Russet'
-    #   (see http://latexcolor.com/)
+    #   a Plank is 350 pixels wide, 15 pixels high, and of color "Russet" 
+    #   #80461B, see http://latexcolor.com/
     
-    def __init__(self, w = 350, h = 15, clr = color(50, 27, 11)):
+    def __init__(self, w = 350, h = 15, clr = color(128, 70, 27)):
     
         # TOUR-6
         #   - first, call the constructor of the superclass of Plank, i.e. FBox

@@ -4,8 +4,8 @@
 from fisica import FCircle
 
 class Nail(FCircle):
-    # Anti-flash white, see http://latexcolor.com/
-    def __init__(self, diam = 10, clr = color(27, 51, 71)):
+    # Steel blue #4682B4, see http://latexcolor.com/
+    def __init__(self, diam = 10, clr = color(70, 130, 180)):
         FCircle.__init__(self, diam)
         
         self.setFillColor(clr)

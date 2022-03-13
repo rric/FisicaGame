@@ -6,7 +6,7 @@ from fisica import FCircle
 class PingPongBall(FCircle):
     def __init__(self):
         FCircle.__init__(self, 16)
-        self.setFillColor(color(100, 100, 100))
+        self.setFillColor(color(255, 255, 255)) # white
         
         self.setDamping(0.2)
         self.setDensity(300.0)

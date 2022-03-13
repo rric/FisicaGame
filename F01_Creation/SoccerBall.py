@@ -28,8 +28,8 @@ from fisica import FCircle
 # Ok ... now you can really start to do HOMEWORK-1-a.
 
 class SoccerBall(FCircle):
-    # Anti-flash white, see http://latexcolor.com/
-    def __init__(self, diam = 50, clr = color(95, 95, 96)):
+    # Anti-flash white #F2F3F4, see http://latexcolor.com/
+    def __init__(self, diam = 50, clr = color(242, 243, 244)):
         FCircle.__init__(self, diam)
         
         self.setFillColor(clr)
