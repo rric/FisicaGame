@@ -97,7 +97,7 @@ def setup():
 
 bgcolor = color(239, 222, 205) # start with a decent background color, "Almond" (#EFDECD)
 
-paused = False
+paused = 0
 debug = False
 
 
@@ -121,7 +121,10 @@ def drawBackground():
     
     
 def draw():
-    if paused:
+    global paused
+    
+    if paused > 0:
+        paused -= 1
         return
     
     drawBackground()
@@ -165,10 +168,16 @@ def keyPressed():
         global debug
         debug = not debug
 
-    # p/P - switch between paused and not paused
+    # p/P - pause for approx. 24 hours (at 60 fps), or re-start
     if key == 'p' or key == 'P':
         global paused
-        paused = not paused
+        paused = 0 if paused > 0 else 24*60*60*60
+
+    # s/S - save the current frame, and pause for approx. 0.5 sec
+    if key == 's' or key == 'S':
+        saveFrame("fisica-###.jpg")
+        global paused
+        paused = 30
 
 
 # TOUR-8 You already found out what happens if you right-click with the mouse,
