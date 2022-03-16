@@ -134,8 +134,7 @@ def draw():
     #   At my computer, I get about 50 to 60 frames per second. 
     #
     #   As already mentioned, our world holds a list of all objects. Here, we
-    #   get those objects implementing the Ticking interface, and inform them
-    #   about the next tick.
+    #   try to call tick() for each object, and ignore exceptions (see TOUR-6).
     #   For instance, each BurstBall is "ticked()" 50 to 60 times per second; 
     #   with each tick, its lifespan is reduced, until it finally bursts.
     
