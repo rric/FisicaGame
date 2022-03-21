@@ -15,7 +15,7 @@ class SoapBubble(FCircle):
         self.setRestitution(0.0)
         
     # TOUR-11 With every tick, i.e. every 1/60 sec or so, SoapBubbles gets
-    #   a little impulse: random in horizontal dirction, but always upwards.
+    #   a little impulse: random in horizontal direction, but always upwards.
     #   This lets SoapBubbles float through the air; otherwise, they would
     #   fall downward like anything else! (Try it out ...)  
     def tick(self):

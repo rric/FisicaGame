@@ -171,8 +171,8 @@ def keyPressed():
         #     - PingPongBall is-a FCircle, and FCircle is-a FBody
         #     - and so on ...
         #   Going up the class hierarchy, we find FBody to be the common
-        #   ancestor of all things which could be created here. Hence, the
-        #   new object is declared to be an FBody here; later on, it is 
+        #   ancestor of all things which could be created here. Hence,
+        #   the new object is known to be an FBody here; later on, it is 
         #   allowed to be "many things"; this is called _polymorphism_.
         #   How is the common ancestor of *all* classes in Java called?
         
@@ -231,7 +231,7 @@ def keyPressed():
             #   method. How can we know whether an object has the resize() method
             #   or not? Answer: we simply cannot, because items can be of any type
             #   (see above).
-            #   Hence, we siply have to try to resize(): if it works, fine; if it
+            #   Hence, we have to try to resize(): if it works, fine; if it
             #   does not, an exception is thrown, which is ignored here.
             try:
                 b.resize(factor)
@@ -239,10 +239,14 @@ def keyPressed():
                 pass
 
     # HOMEWORK-2-a If somebody presses 'c' or 'C' here, SoccerBalls (and, at your
-    #   choice, other objects), should change their color.
+    #   choice, other objects) should change their color.
     #   Hint: this might be quite similar to SoccerBall.resize() ...
     
-    # HOMEWORK-2-b Give the user some control over the red, green, and white ball:
+    # HOMEWORK-2-b If a BurstBall bursts, display the word "BANG" or "BOOM",
+    #   and/or an explosion such as https://openclipart.org/detail/284551/boom
+    #   at the screen for some moments
+    
+    # HOMEWORK-2-c Give the user some control over the red, green, and white ball:
     #   * Use special keys, such as the UP, DOWN, LEFT, and RIGHT keys,
     #     see also https://processing.org/reference/keyCode.html
     #   * redBall, greenBall, and whiteBall are now global variables which can be 
