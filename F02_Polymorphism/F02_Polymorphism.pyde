@@ -115,7 +115,8 @@ def drawBackground():
     
     textSize(12)
     textAlign(RIGHT)
-    text("FisicaGame\n[lesson: polymorphism]", 0.99*width, 0.95*height)
+    text("FisicaGame @" + nf(frameRate, 1, 1) + "fps\n[lesson: polymorphism]", 
+         0.99*width, 0.95*height)
     
     
 def draw():
@@ -134,7 +135,7 @@ def draw():
     #   gives the impression of smooth motion; the drawing frequency is called
     #   frame rate. Processing provides a variable to inspect this value, see
     #   https://processing.org/reference/frameRate.html
-    #   At my computer, I get about 50 to 60 frames per second. 
+    #   You see the fps rate in the lower right corner of the background.
     #
     #   As already mentioned, our world holds a list of all objects. Here, we
     #   try to call tick() for each object, and ignore exceptions (see TOUR-6).
@@ -242,9 +243,9 @@ def keyPressed():
     #   choice, other objects) should change their color.
     #   Hint: this might be quite similar to SoccerBall.resize() ...
     
-    # HOMEWORK-2-b If a BurstBall bursts, display the word "BANG" or "BOOM",
-    #   and/or an explosion such as https://openclipart.org/detail/284551/boom
-    #   at the screen for some moments
+    # HOMEWORK-2-b If a BurstBall bursts, display the word "BANG" or "BOOM", and/or
+    #   an explosion picture such as https://openclipart.org/detail/284551/boom
+    #   at the screen for some moments.
     
     # HOMEWORK-2-c Give the user some control over the red, green, and white ball:
     #   * Use special keys, such as the UP, DOWN, LEFT, and RIGHT keys,
