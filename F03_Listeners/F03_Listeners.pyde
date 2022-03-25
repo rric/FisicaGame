@@ -22,73 +22,13 @@ from SoapBubble import *
 from SoccerBall import *
 
 
-# TOUR-4 What happenes when two objects of the fisica world, say, a Brick and 
-#   a SoccerBall, hit each other? ... they send out a message!
-#   Here, the message is an object of type FContact, and the receiver is again
-#   our program. An FContact message holds several details about the contact:
-#   for instance, which two bodies have contact, where the contact happened,
-#   at which velocity, and so on. See all the details at
-#   http://www.ricardmarxer.com/fisica/reference/fisica/FContact.html
-
-class ContactListener(FContactAdapter):
-    def __init__(self):
-        pass
-
-    def contactPersisted(self, contact):
-        pass
-
-    def contactEnded(self, contact):
-        pass
-
-    def contactStarted(self, contact):
-        b1 = contact.getBody1()
-        b2 = contact.getBody2()
-        
-        print(b1.getName(), " <-> ", b2.getName())
-    
-        # TOUR-5 Objects should make sounds if they bang against hard things.
-        #   I decided, somehow arbitrarily, that Nails, Planks, and Bricks are hard,
-        #   because they have a density greater than 2000.
-        #   A sound is played if the first object is hard, and the second object can
-        #   make a sound. Once again, we find out the type of an object by using
-        #   the _instanceof_ keyword.
-        isHard1 = (b1.getDensity() > 2000)
-    
-        if isHard1:
-            try:
-                b2.playSound()
-            except:
-                pass
-    
-        # TOUR-8 If, say, a Brick and a SoccerBall hit each other, we do not know
-        #   in which order they appear in the FContact message: either b1 is the
-        #   Brick, and b2 the SoccerBall, or vice versa. Hence, we have to repeat
-        #   the code from above, only with b1 and b2 switched.
-        isHard2 = (b2.getDensity() > 2000)
-    
-        if isHard2:
-            try:
-                b1.playSound()
-            except:
-                pass
-        
-        # HOMEWORK-3-b Remove a soap bubble as soon as it has contact with any other object.
-        # Hint: http://www.ricardmarxer.com/fisica/reference/fisica/FWorld.html#remove(fisica.FBody)
-        
-        # HOMEWORK-3-c+ (bonus homework): Implement the following behaviour:
-        #   As soon as a SoccerBall has contact with a Nail, it starts to loose air; that is,
-        #   it gets smaller and smaller, probably makes a hissing sound, until it disappears
-        #   and is removed from this world ...
-
-
-
 def setup():
     size(800, 550)
 
     Fisica.init(this)
     Fisica.setScale(150)  # scale: 150 pixel = 1 m
     
-    global world
+    global world, worldBodyCount
     world = FWorld()
     
     world.setGravity(0, 300)
@@ -115,27 +55,27 @@ def setup():
     plank.setName("Wooden plank")
     world.add(plank)
 
-    global soccersf, bricksf, pingpongsf
 
-    # TOUR-7 Sound files must be located in the /data folder of the sketch;
-    #   go have a look: our sketch now uses four sound files! ... See also 
-    #   https://processing.org/reference/libraries/sound/SoundFile.html
-    #
-    #   The soccer ball sound is used under the "CC BY 3.0" license;
-    #   CC = Creative Commons, BY = attribution, 3.0 = version of the license.
-    #   It means that now I *have to* mention the author:
-    # 
+    # TOUR-11 Lets create a global dictionary of sound files here. By the way, sound files
+    #   must be located in the /data folder of the sketch; go have a look!
+    global sounds
+    sounds = {}
+
     #   soccer ball hit ground 01.wav by volivieri, used under CC BY 3.0
     #   https://freesound.org/s/37154/
-    soccersf = SoundFile(Fisica.parent(), "37154__volivieri__soccer-ball-hit-ground-01.wav")
+    sounds['soccer'] = SoundFile(Fisica.parent(), "37154__volivieri__soccer-ball-hit-ground-01.wav")
 
     # Brick dropped on other bricks by jackmurrayofficial used under CC 0
     # https://freesound.org/s/429402/
-    bricksf = SoundFile(Fisica.parent(), "429402__jackmurrayofficial__brick-dropped-on-other-bricks_cut.wav")
+    sounds['brick'] = SoundFile(Fisica.parent(), "429402__jackmurrayofficial__brick-dropped-on-other-bricks_cut.wav")
 
     # Dropping ping pong ball on table by giddster, used under CC 0
     # https://freesound.org/s/414460/
-    pingpongsf = SoundFile(Fisica.parent(), "414460__giddster__dropping-ping-pong-ball-on-table_cut.wav")
+    sounds['pingpong'] = SoundFile(Fisica.parent(), "414460__giddster__dropping-ping-pong-ball-on-table_cut.wav")
+    
+    # video game >> burst2.wav by ReadeOnly, used under CC 0, from
+    # https://freesound.org/s/186927/
+    sounds['bang'] = SoundFile(Fisica.parent(), "186927__readeonly__burst2.wav")
 
     global redBall, greenBall, whiteBall
 
@@ -143,36 +83,38 @@ def setup():
     redBall.setPosition(120, 40)                    # ... somewhere at top left ...
     redBall.setVelocity(random(-80, 80), 0)         # ... with random velocity.
     redBall.setName("Red soccer ball")
-    redBall.setSound(soccersf)
+    redBall.setSound(sounds['soccer'])
     world.add(redBall)
     
     greenBall = SoccerBall(50, color(57, 255, 20))  # create a "Neon green" (#39FF14) ball ...
     greenBall.setPosition(width/2, 40)              # ... somewhere at top centered ...
     greenBall.setVelocity(random(-80, 80), 0)       # ... with random velocity.
     greenBall.setName("Green soccer ball")
-    greenBall.setSound(soccersf)
+    greenBall.setSound(sounds['soccer'])
     world.add(greenBall)
 
     whiteBall = SoccerBall()                        # create a standard colored ball ...
     whiteBall.setPosition(width-120, 40)            # ... somewhere at top right ...
     whiteBall.setVelocity(random(-80, 80), 0)       # ... with random velocity.
     whiteBall.setName("Standard soccer ball")
-    whiteBall.setSound(soccersf)
+    whiteBall.setSound(sounds['soccer'])
     world.add(whiteBall)
     
     leftPingPong = PingPongBall()                   # create a ping pong ball ...
     leftPingPong.setPosition(width/3, 40)           # ... at top left ...
     leftPingPong.setVelocity(random(-80, 80), 0)    # ... with random velocity.
-    leftPingPong.setName("Ping pong ball #1")
-    leftPingPong.setSound(pingpongsf)
+    leftPingPong.setName("Left ping pong ball")
+    leftPingPong.setSound(sounds['pingpong'])
     world.add(leftPingPong)
 
     rightPingPong = PingPongBall()                  # create a ping pong ball ...
     rightPingPong.setPosition(2*width/3, 40)        # ... at top right ...
     rightPingPong.setVelocity(random(-80, 80), 0)   # ... with random velocity.
-    rightPingPong.setName("Ping pong ball #2")
-    rightPingPong.setSound(pingpongsf)
+    rightPingPong.setName("Right ping pong ball")
+    rightPingPong.setSound(sounds['pingpong'])
     world.add(rightPingPong)
+    
+    worldBodyCount = len(world.getBodies())
 
 
 bgcolor = color(239, 222, 205)  # start with a decent background color, "Almond" (#EFDECD)
@@ -197,8 +139,7 @@ def drawBackground():
     
     textSize(12)
     textAlign(RIGHT)
-    text("FisicaGame @" + nf(frameRate, 1, 1) + "fps\n[lesson: polymorphism]", 
-         0.99*width, 0.95*height)
+    text("FisicaGame\n[lesson: listeners]", 0.99*width, 0.95*height)
     
     
 def draw():
@@ -229,7 +170,7 @@ def draw():
 # TOUR-2 Lets have another look at the keyPressed() method. The documentation
 #   at https://processing.org/reference/keyPressed_.html talks about "mouse and
 #   keyboard events". An _event_ is some kind of _message_ which is created by
-#   the _sender_, transmitted over a _channel_, and received by a _receiver_, or
+#   a _sender_, transmitted over a _channel_, and received by a _receiver_, or
 #   several receivers. This _pattern_ is so common that it has many names, e.g.,
 #   - event handling: event source, control -> event handler
 #   - publish–subscribe: publisher -> subscriber
@@ -249,24 +190,28 @@ def keyPressed():
 
         if wurfel == 1:
             thing = Brick()
-            thing.setSound(bricksf)
+            thing.setSound(sounds['brick'])
         elif wurfel == 2:
             thing = PingPongBall()
-            thing.setSound(pingpongsf)
+            thing.setSound(sounds['pingpong'])
         elif wurfel == 3:
             thing = SoccerBall()
-            thing.setSound(soccersf)
+            thing.setSound(sounds['soccer'])
         elif wurfel == 4:
-            sf = SoundFile(Fisica.parent(), "186927__readeonly__burst2.wav")
             thing = BurstBall()
-            thing.setBang(sf)
+            thing.setBang(sounds['bang'])
         else:
-            randclr = color(random(255), random(255), random(255))
-            thing = SoapBubble(38, randclr)
+            clr = color(random(255), random(255), random(255))
+            thing = SoapBubble(38, clr)
         
+        # TOUR-8 Since most objects will get highlighted at some time, set their 
+        #   name to some meaningful text here.
         thing.setPosition(int(random(80, width-80)), 30)
-        global world
+        thing.setName("Object #" + str(worldBodyCount) + ": a " + thing.__class__.__name__)
+        
+        global world, worldBodyCount
         world.add(thing)
+        worldBodyCount += 1
 
     # d/D - switch debug mode on or off
     if key == 'd' or key == 'D':
@@ -285,10 +230,11 @@ def keyPressed():
         paused = 30
 
 
-# TOUR-3 Lets examine what happens when the user presses a mouse button:
-#   the mouse, as the "sender", generates a new "message", and sends it
-#   to anyone who is listening; here, the "receiver" is our FisicaGame 
-#   program; it receives a message, which contains information about
+# TOUR-3 When someone presses a mouse button, the OS handles it (more or
+#   less) like this: the mouse, as the sender, generates a new message,
+#   which is sent to an appropriate listener (most often, the window
+#   underneath the mouse position). If the receiver is this sketch
+#   (F03_Listeners.pyde), it receives a message with information about
 #   - whether or not a mouse button is currently pressed (mousePressed)
 #   - which mouse button is pressed, if any (mouseButton)
 #   - where the mouse is currently located (mouseX, mouseY)
@@ -304,8 +250,103 @@ def mousePressed():
         world.add(nail)
         
         # HOMEWORK-3-a Play a hammering sound whenever a nail is added here.
-        # Hint: https://processing.org/reference/libraries/sound/SoundFile.html
+        #   Hint: TOUR-10 and TOUR-11
+        
+        
+# TOUR-4 The same kind of sender/message/receiver mechanism is applied when two 
+#   objects of the fisica world touch each other:
+#   Here, the message is an object of type FContact, and the receiver is again
+#   our program. An FContact message holds several details about the contact:
+#   for instance, which two bodies have contact, where the contact happened,
+#   at which velocity, and so on. See all the details at
+#   http://www.ricardmarxer.com/fisica/reference/fisica/FContact.html
+class ContactListener(FContactAdapter):
+    def __init__(self):
+        pass
 
+    # TOUR-5a More precisly, this sketch might receive three different kinds 
+    #   of "contact" messages: one if the contact started, ...
+    def contactStarted(self, contact):
+        b1 = contact.getBody1()
+        b2 = contact.getBody2()
+        # print(b1.getName(), " <-> ", b2.getName())
+        
+        try:
+            b1.highlight(18)
+        except Exception as xc:
+            pass   # print(str(xc))
+            
+        try:
+            b2.highlight(18)
+        except Exception as xc:
+            pass   # print(str(xc))
+
+        # TOUR-9 Objects should make sounds if they bang against solid things.
+        #   I decided, somehow arbitrarily, that Nails, Planks, and Bricks are solid,
+        #   because they have a density greater than 2000. A sound is played if the
+        #   first object is hard, and the second object can make a sound.
+        isSolid1 = (b1.getDensity() > 2000)
+    
+        if isSolid1:
+            try:
+                b2.playSound()
+            except:
+                pass
+    
+        # TOUR-12 If, say, a Brick and a SoccerBall hit each other, we do not know
+        #   in which order they appear in the FContact message: either b1 is the
+        #   Brick, and b2 the SoccerBall, or vice versa. Hence, we have to repeat
+        #   the code from above, only with b1 and b2 switched.
+        isSolid2 = (b2.getDensity() > 2000)
+    
+        if isSolid2:
+            try:
+                b1.playSound()
+            except:
+                pass
+        
+        # HOMEWORK-3-b Remove a soap bubble as soon as it has contact with any other object.
+        # Hint: http://www.ricardmarxer.com/fisica/reference/fisica/FWorld.html#remove(fisica.FBody)
+        
+        # HOMEWORK-3-c+ (bonus homework): Implement the following behaviour:
+        #   As soon as a SoccerBall has contact with a Nail, it starts to loose air; that is,
+        #   it gets smaller and smaller, probably makes a hissing sound, until it disappears
+        #   and is removed from this world ...
+
+
+    # TOUR-5b ... a lot of messages as long as the contact is persisted, and ...
+    def contactPersisted(self, contact):
+        b1 = contact.getBody1()
+        b2 = contact.getBody2()
+        
+        try:
+            b1.highlight()
+        except Exception as xc:
+            pass   # print(str(xc))
+
+        try:
+            b2.highlight()
+        except Exception as xc:
+            pass   # print(str(xc))
+
+
+    # TOUR-5c ... one final message if the contact ends.
+    #   On "start", and on "persisting" messages, both objects will be highlighted
+    #   (if possible). As the contact ends, both objects will be set back to normal
+    #   appearance.
+    def contactEnded(self, contact):
+        b1 = contact.getBody1()
+        b2 = contact.getBody2()
+        
+        try:
+            b1.undoHighlight()
+        except:
+            pass
+            
+        try:
+            b2.undoHighlight()
+        except:
+            pass
 
 # ----------------------------------------------------------------------
 # This file is part of FisicaGame.

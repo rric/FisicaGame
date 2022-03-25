@@ -2,8 +2,14 @@
 # Copyright 2018-2022 Roland Richter
 
 from fisica import FBox
+from HighlightAble import *
 
-class Plank(FBox):
+# TOUR-7 ... then reuse it everywhere where needed: Plank now inherits from FBox
+#   (as before), and additionally from HighlightAble. As a consequence, Plank
+#   now provides the methods highlight() and undoHighlight(), as implemented
+#   in HighlightAble. This technique is called _multiple inheritance_; some
+#   languages (such as Python) allow it, some (such as Java) do not.
+class Plank(FBox, HighlightAble):
 
     def __init__(self, w = 350, h = 15, clr = color(128, 70, 27)):
         FBox.__init__(self, w, h)
@@ -13,6 +19,7 @@ class Plank(FBox):
         self.setDamping(0.2)
         self.setDensity(7000.0)
         self.setRestitution(0.1)
+
 
 # ----------------------------------------------------------------------
 # This file is part of FisicaGame.

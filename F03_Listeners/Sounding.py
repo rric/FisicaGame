@@ -1,7 +1,8 @@
 # Sounding.py
 # Copyright 2018-2022 Roland Richter
 
-
+# TOUR-10 Use multiple inheritance to add sounding methods to several classes;
+#   each class which derives from Sounding will be able to playSound().
 class Sounding:
     def __init__(self):
         pass
@@ -12,6 +13,7 @@ class Sounding:
     def playSound(self, amplitude = 1.0):
         self.sound.amp(amplitude)
         self.sound.play()
+
 
 # ----------------------------------------------------------------------
 # This file is part of FisicaGame.

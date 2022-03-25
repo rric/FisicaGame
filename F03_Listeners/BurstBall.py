@@ -14,20 +14,13 @@ class BurstBall(SoccerBall):
     def setBang(self, soundfile):
         self.bang = soundfile
 
-        
-    # TOUR-8 Another tick reduces a BurstBalls life span by 1. When its life
-    #   span reaches 0, it bursts ...        
+
     def tick(self):
         self.lifespan -= 1
-    
         if self.lifespan <= 0:
             self.burst()
             
-    # TOUR-9 ... it bursts with a loud bang, and is removed from our world.
-    #   
-    #   Each and every FBody contains a reference to the world it was added, called 
-    #   m_world. By convention, an "m_" prefix indicates a member field.
-    #   This is kind of a hack, since m_world is not mentioned in the documentation.
+
     def burst(self):
         self.bang.play()
         self.m_world.remove(self)

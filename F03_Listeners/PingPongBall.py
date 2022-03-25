@@ -2,9 +2,10 @@
 # Copyright 2018-2022 Roland Richter
 
 from fisica import FCircle
+from HighlightAble import *
 from Sounding import *
 
-class PingPongBall(FCircle, Sounding):
+class PingPongBall(FCircle, HighlightAble, Sounding):
     def __init__(self):
         FCircle.__init__(self, 16)
         self.setFillColor(color(255, 255, 255)) # white

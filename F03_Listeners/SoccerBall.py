@@ -2,9 +2,10 @@
 # Copyright 2018-2022 Roland Richter
 
 from fisica import FCircle
+from HighlightAble import *
 from Sounding import *
 
-class SoccerBall(FCircle, Sounding):
+class SoccerBall(FCircle, HighlightAble, Sounding):
     # Anti-flash white #F2F3F4, see http://latexcolor.com/
     def __init__(self, diam = 50, clr = color(242, 243, 244)):
         FCircle.__init__(self, diam)
@@ -14,16 +15,6 @@ class SoccerBall(FCircle, Sounding):
         self.setDamping(0.2)
         self.setDensity(1000.0)
         self.setRestitution(0.5)
-        
-    # TOUR-4 SoccerBall now has one additional method, resize(); it is 
-    #   implemented here, and resizes the self object by factor; e.g.
-    #     factor = 2.5 -> resize self to 250 %, i.e. 150 % larger
-    #     factor = 0.7 -> resize self to 70 %, i.e. 30 % smaller
-    #     factor = 1.0 -> resize self to 100 %, i.e. do not resize at all
-    def resize(self, factor):
-        mySize = self.getSize()
-        newSize = factor * mySize
-        self.setSize(newSize)       
         
         
 # ----------------------------------------------------------------------

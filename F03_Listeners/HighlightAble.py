@@ -1,24 +1,25 @@
-# Brick.py
+# HighlightAble.py
 # Copyright 2018-2022 Roland Richter
 
-add_library('sound')
+# TOUR-6 Most objects in our world (except Nails) should be highlighted when they
+#   get in contact. It would be possible to add a highlight() method to each 
+#   class, but that would be quite tedious. There's a better way to add new
+#   methods to a large number of classes: implement it once (down here), ...
+class HighlightAble:
+    def __init__(self):
+        pass
+        
+    def highlight(self, txtsize = 12):
+        self.setStroke(192, 192, 192)
+        if self.getName():
+            textAlign(LEFT, BOTTOM)
+            textSize(txtsize)
+            text(self.getName(), self.getX(), self.getY())
 
-from fisica import FBox
-from HighlightAble import *
-from Sounding import *
 
-class Brick(FBox, HighlightAble, Sounding):
-    # Brick red #CB4154, see http://latexcolor.com/
-    def __init__(self, w = 45, h = 20, clr = color(203, 65, 84)):
-        
-        FBox.__init__(self, w, h)
-        
-        self.setFillColor(clr)
-        
-        self.setDamping(0.2)
-        self.setDensity(200000.0)
-        self.setRestitution(0.0)
-        
+    def undoHighlight(self):
+        self.setStroke(0, 0, 0)
+
 
 # ----------------------------------------------------------------------
 # This file is part of FisicaGame.
