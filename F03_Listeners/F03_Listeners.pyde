@@ -36,27 +36,8 @@ def setup():
     world.setEdges()
     
     world.setContactListener(ContactListener())
-
-    # Lets create some objects, and add them to the world
-
-    for i in range(1, 6):
-        nail = Nail()
-        nail.setPosition(i * width/6, 200)
-        world.add(nail)
-
-    for i in range(2, 5):
-        nail = Nail()
-        nail.setPosition(i * width/6, 350)
-        world.add(nail)
     
-    plank = Plank(350, 15)
-    
-    plank.setPosition(width/2, 300)
-    plank.setName("Wooden plank")
-    world.add(plank)
-
-
-    # TOUR-11 Lets create a global dictionary of sound files here. By the way, sound files
+    # TOUR-11 Create a global dictionary of sound files here. By the way, sound files
     #   must be located in the /data folder of the sketch; go have a look!
     global sounds
     sounds = {}
@@ -76,6 +57,24 @@ def setup():
     # video game >> burst2.wav by ReadeOnly, used under CC 0, from
     # https://freesound.org/s/186927/
     sounds['bang'] = SoundFile(Fisica.parent(), "186927__readeonly__burst2.wav")
+
+    # Lets create some objects, and add them to the world
+
+    for i in range(1, 6):
+        nail = Nail()
+        nail.setPosition(i * width/6, 200)
+        world.add(nail)
+
+    for i in range(2, 5):
+        nail = Nail()
+        nail.setPosition(i * width/6, 350)
+        world.add(nail)
+    
+    plank = Plank(350, 15)
+    
+    plank.setPosition(width/2, 300)
+    plank.setName("Wooden plank")
+    world.add(plank)
 
     global redBall, greenBall, whiteBall
 
@@ -114,7 +113,11 @@ def setup():
     rightPingPong.setSound(sounds['pingpong'])
     world.add(rightPingPong)
     
-    worldBodyCount = len(world.getBodies())
+    # I expected that redBall, greenBall, etc. are in the getBodies() list, but ...
+    # worldBodyCount = len(world.getBodies())
+    # ... only returns 4 objects. Hence, set worldBodyCount manually here: 
+    worldBodyCount = 14
+    
 
 
 bgcolor = color(239, 222, 205)  # start with a decent background color, "Almond" (#EFDECD)
@@ -269,6 +272,7 @@ class ContactListener(FContactAdapter):
     def contactStarted(self, contact):
         b1 = contact.getBody1()
         b2 = contact.getBody2()
+        # uncomment the next line to see which contacts are processed
         # print(b1.getName(), " <-> ", b2.getName())
         
         try:
@@ -311,7 +315,7 @@ class ContactListener(FContactAdapter):
         # HOMEWORK-3-c+ (bonus homework): Implement the following behaviour:
         #   As soon as a SoccerBall has contact with a Nail, it starts to loose air; that is,
         #   it gets smaller and smaller, probably makes a hissing sound, until it disappears
-        #   and is removed from this world ...
+        #   and is removed from this world.
 
 
     # TOUR-5b ... a lot of messages as long as the contact is persisted, and ...
