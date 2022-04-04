@@ -195,7 +195,6 @@ def draw():
             if not e.isStatic() and not e.__class__.__name__ == "Plank":
                 count += 1
 
-        # TOUR-9 REMOVED
         if count == 1:
             print("One thing in the bucket is. ")
         else:
@@ -264,7 +263,7 @@ def keyPressed():
         if keyCode == RIGHT:
             ellen.addImpulse(+1500, 0)
 
-    # TOUR-12 In Fisica, there's yet another way to create "compound" objects,
+    # TOUR-11 In Fisica, there's yet another way to create "compound" objects,
     #   i.e. objects that consist of other objects: it provides a number of
     #   different Joint classes, see
     #   http://www.ricardmarxer.com/fisica/reference/fisica/FJoint.html

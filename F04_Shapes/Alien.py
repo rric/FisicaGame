@@ -3,7 +3,7 @@
 
 from fisica import FCircle, FCompound, FLine
 
-# TOUR-10 An Alien object is, again, a composition of other FBody objects:
+# TOUR-9 An Alien object is, again, a composition of other FBody objects:
 #   - the head, of type FCircle
 #   - the mouth, of type FLine
 #   - left and right eye, of type FCircle
@@ -15,7 +15,7 @@ class Alien(FCompound):
         
         self.setName(name)
         
-        # TOUR-11 In a previous comment (TOUR 2), I claimed that our sketch
+        # TOUR-10 In a previous comment (TOUR 2), I claimed that our sketch
         #   must obey the laws of physics, and that only one object can be
         #   at a given position at a given time.
         #   That's not completely true: the Fisica library allows an object 
