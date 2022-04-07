@@ -64,24 +64,24 @@ def setup():
 
     for i in range(1, 6):
         nail = Nail()
-        nail.setPosition(i * width/6, 200)
+        nail.setPosition(i * width/6, 0.36 * height)
         world.add(nail)
 
     for i in range(2, 5):
         nail = Nail()
-        nail.setPosition(i * width/6, 350)
+        nail.setPosition(i * width/6, 0.63 * height)
         world.add(nail)
     
     plank = Plank(350, 15)
     
-    plank.setPosition(width/2, 300)
+    plank.setPosition(width/2, 0.5 * height)
     plank.setName("Wooden plank")
     world.add(plank)
 
     global redBall, greenBall, whiteBall
 
     redBall = SoccerBall(50, color(255, 40, 0))     # create a "Ferrari red" (#FF2800) ball ...
-    redBall.setPosition(120, 40)                    # ... somewhere at top left ...
+    redBall.setPosition(0.15 * width, 40)           # ... somewhere at top left ...
     redBall.setVelocity(random(-80, 80), 0)         # ... with random velocity.
     redBall.setName("Red soccer ball")
     redBall.setSound(sounds['soccer'])
@@ -95,7 +95,7 @@ def setup():
     world.add(greenBall)
 
     whiteBall = SoccerBall()                        # create a standard colored ball ...
-    whiteBall.setPosition(width-120, 40)            # ... somewhere at top right ...
+    whiteBall.setPosition(0.85 * width, 40)            # ... somewhere at top right ...
     whiteBall.setVelocity(random(-80, 80), 0)       # ... with random velocity.
     whiteBall.setName("Standard soccer ball")
     whiteBall.setSound(sounds['soccer'])
@@ -125,7 +125,7 @@ def setup():
     global ellen
     ellen = Alien("Ellen")
 
-    ellen.setPosition(int(random(width/2-30, width/2+30)), 250)
+    ellen.setPosition(int(random(width/2-30, width/2+30)), 0.45 * height)
     world.add(ellen)
     
     # I expected that redBall, greenBall, etc. are in the getBodies() list, but ...
