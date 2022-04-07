@@ -136,8 +136,12 @@ def setup():
 
 bgcolor = color(239, 222, 205)  # start with a decent background color, "Almond" (#EFDECD)
 
-paused = 0
+paused = False
 debug = False
+recordNth = 0   # 0 ... do not record any image
+                # 1 ... record every frame
+                # 2 ... record every second frame
+                # 3 ... record every third frame, etc.
 
 
 # draws background, and displays name and version of this game
@@ -160,10 +164,7 @@ def drawBackground():
     
     
 def draw():
-    global paused
-    
-    if paused > 0:
-        paused -= 1
+    if paused:
         return
     
     drawBackground()
@@ -182,7 +183,11 @@ def draw():
         world.drawDebug()
     else:
         world.draw()
-
+        
+    if recordNth > 0:
+        if frameCount % recordNth == 0:
+            saveFrame("movie/######.png")
+            
 
 def keyPressed():
     # b/B - change background color
@@ -255,16 +260,18 @@ def keyPressed():
         global debug
         debug = not debug
 
-    # p/P - pause for approx. 24 hours (at 60 fps), or re-start
     if key == 'p' or key == 'P':
         global paused
-        paused = 0 if paused > 0 else 24*60*60*60
+        paused = not paused
 
-    # s/S - save the current frame, and pause for approx. 0.5 sec
+    # s/S - save the current frame
     if key == 's' or key == 'S':
         saveFrame("fisica-###.jpg")
-        global paused
-        paused = 30
+        
+    # r/R - start or stop recording of frames
+    if key == 'r' or key == 'R':
+        global recordNth
+        recordNth = 3 if recordNth == 0 else 0
 
 
 def mousePressed():
